@@ -118,8 +118,9 @@ function Navigation({ children }: Props) {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map(({ icon, title }) => (
+                {pages.map(({ title, icon }) => (
                   <MenuItem key={title} onClick={handleCloseNavMenu}>
+                    {icon}
                     <Typography textAlign="center">{title}</Typography>
                   </MenuItem>
                 ))}
@@ -157,7 +158,6 @@ function Navigation({ children }: Props) {
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                  {/*<Typography>Sarah Davis</Typography>*/}
                 </IconButton>
               </Tooltip>
               <Menu

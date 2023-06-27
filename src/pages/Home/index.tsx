@@ -1,15 +1,7 @@
 import React, { CSSProperties, useState } from "react";
 import { useCSVReader } from "react-papaparse";
-import { CSVLink } from "react-csv";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Paper,
-  Button,
-} from "@mui/material";
+import { Button } from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { CsvReader, AcceptedFile, TableWrapper } from "./styles";
 
 const styles = {
@@ -18,14 +10,37 @@ const styles = {
   } as CSSProperties,
 };
 function Home() {
-  const [data, setData] = useState([]);
+  const [columns, setColumns] = useState<any[]>([]);
+  const [rows, setRows] = useState<any[]>([]);
   const { CSVReader } = useCSVReader();
+
+  const csvToDataGrid = (data: Array<string[]>) => {
+    const columns = data[0].map((data) => ({
+      field: data,
+      headerName: data.toUpperCase(),
+      width: 150,
+    }));
+    setColumns(columns);
+
+    data.shift();
+    const rows = data?.map((data, i) => {
+      const obj: Record<string, string | number> = { id: i };
+      columns.forEach((column, i) => {
+        obj[column.field] = data[i];
+      });
+
+      return obj;
+    });
+    if (rows) {
+      setRows(rows);
+    }
+  };
 
   return (
     <>
       <CSVReader
         onUploadAccepted={(results: any) => {
-          setData(results.data);
+          csvToDataGrid(results.data);
         }}
       >
         {({
@@ -48,29 +63,13 @@ function Home() {
           </>
         )}
       </CSVReader>
-      {data.length ? (
+      {rows.length ? (
         <TableWrapper>
-          <CSVLink className="downloadbtn" filename="my-file.csv" data={data}>
-            Export to CSV
-          </CSVLink>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableBody>
-                {data.map((row: string[], i) => (
-                  <TableRow
-                    key={i}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    {row.map((item: string, i: number) => (
-                      <TableCell key={item + i} component="th" scope="row">
-                        {item}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            slots={{ toolbar: GridToolbar }}
+          />
         </TableWrapper>
       ) : null}
     </>
