@@ -1,0 +1,24 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["@typescript-eslint", "prettier", "react-hooks"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "semi": 1,
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "multiline-comment-style": ["error", "separate-lines"],
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+
+    "react-hooks/rules-of-hooks": "error"
+  }
+}

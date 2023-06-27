@@ -1,0 +1,20 @@
+import { Step, User } from "types";
+
+export default {
+  SET_USER_NAME: "SET_USER_NAME",
+  SET_USER_ID: "SET_USER_ID",
+  SET_USER_EMAIL: "SET_USER_EMAIL",
+  SET_USER_DOB: "SET_USER_DOB",
+  SET_USER_LOOKING: "SET_USER_LOOKING",
+  SET_USER_LOOKING_TYPE: "SET_USER_LOOKING_TYPE",
+  SET_USER_PASSWORD: "SET_USER_PASSWORD",
+  SET_USER_GENDER: "SET_USER_GENDER",
+  SET_USER_LOCATION: "SET_USER_LOCATION",
+  SET_STEP: "SET_STEP",
+  CLEAR: "CLEAR",
+};
+
+export type UsersStore = {
+  user: User;
+  currentStep: Step;
+};
